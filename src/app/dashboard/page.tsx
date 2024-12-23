@@ -1,7 +1,9 @@
-import { getUser } from "../../../actions/user";
+"use client";
+import { getUser } from "@/features/user/api/get-user";
 
-export default async function Dashboard() {
-  const user = await getUser();
+export default function Dashboard() {
+  const { data } = getUser();
 
-  return <pre>{JSON.stringify(user, null, 2)}</pre>;
+  console.log(data);
+  return <>dasdasdasda</>;
 }

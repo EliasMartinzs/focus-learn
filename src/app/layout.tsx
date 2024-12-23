@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Baloo_Tamma_2 } from "next/font/google";
 import { dark } from "@clerk/themes";
 import { ptBR } from "@clerk/localizations";
+import { QueryProvider } from "@/providers/query-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,7 +34,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <QueryProvider>{children}</QueryProvider>
           </ThemeProvider>
         </body>
       </html>
