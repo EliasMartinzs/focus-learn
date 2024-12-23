@@ -7,7 +7,7 @@ const app = new Hono().get("/", clerkMiddleware(), async (c) => {
 
   if (!auth?.userId) {
     return c.json({
-      message: "You are not logged in.",
+      error: "You are not logged in.",
     });
   }
 
