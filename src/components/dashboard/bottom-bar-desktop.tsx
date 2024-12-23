@@ -1,7 +1,7 @@
 "use client";
 
 import { MENU_LINKS } from "@/constants/links";
-import { cn } from "@/lib/utils";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -14,7 +14,7 @@ export const BottomBarDesktop = (props: Props) => {
   const pathname = usePathname();
 
   return (
-    <footer className="hidden lg:block w-full">
+    <footer className="hidden lg:block w-full fixed bottom-0 z-50 left-0 bg-background rounded-full">
       <div className="w-full flex items-center justify-between p-5">
         <Link href="/dashboard" className="text-xl font-medium">
           Focus Learn
