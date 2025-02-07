@@ -28,7 +28,8 @@ export const createSection = () => {
         queryKey: ["create-sections", "sections"],
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.log(error);
       toast("Erro ao criar seção de estudos!, Tente novamente");
     },
   });

@@ -16,7 +16,7 @@ export const createSectionStudySchema = z.object({
     .max(32),
   totalHours: z
     .string()
-    .min(3, {
+    .min(1, {
       message: "Insira a quantidade de horas a serem estudadas",
     })
     .max(32),

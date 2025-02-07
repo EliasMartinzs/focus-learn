@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/reusable/buttons";
+import { createSection } from "../api/create-section";
+import { useTransition } from "react";
 
 export const CreateNewSectionStudy = () => {
   const form = useForm<CreateSectionStudySchemaValidation>({
@@ -29,9 +31,16 @@ export const CreateNewSectionStudy = () => {
     },
   });
 
+  const { mutate, isSuccess } = createSection();
+  const [isPending, startTransition] = useTransition();
+
   function onSubmit(values: CreateSectionStudySchemaValidation) {
-    console.log(values);
+    startTransition(() => {
+      mutate(values);
+    });
   }
+
+  const isLoading = form.formState.isLoading || isPending;
 
   return (
     <>
@@ -48,7 +57,11 @@ export const CreateNewSectionStudy = () => {
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Banco de dados" />
+                    <Input
+                      disabled={isLoading}
+                      {...field}
+                      placeholder="Banco de dados"
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -62,6 +75,7 @@ export const CreateNewSectionStudy = () => {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={isLoading}
                       placeholder="Matemática e banco de dados"
                     />
                   </FormControl>
@@ -75,7 +89,11 @@ export const CreateNewSectionStudy = () => {
                 <FormItem>
                   <FormLabel>Disciplina</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Matemática" />
+                    <Input
+                      disabled={isLoading}
+                      {...field}
+                      placeholder="Matemática"
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -94,6 +112,7 @@ export const CreateNewSectionStudy = () => {
                       }}
                       placeholder="65h"
                       type="number"
+                      disabled={isLoading}
                     />
                   </FormControl>
                 </FormItem>
@@ -105,7 +124,7 @@ export const CreateNewSectionStudy = () => {
               variant="outline"
               className="p-2"
               title="Salvar"
-              isLoading={form.formState.isLoading}
+              isLoading={isLoading}
             />
           </form>
         </Form>

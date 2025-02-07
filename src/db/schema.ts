@@ -42,7 +42,7 @@ export const studySections = pgTable("study_sections", {
     .references(() => users.id)
     .notNull(),
   discipline: varchar("discipline").notNull(),
-  totalHours: decimal("total_hours"),
+  totalHours: integer("total_hours"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
 });

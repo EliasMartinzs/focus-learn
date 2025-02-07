@@ -1,13 +1,14 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createSectionStudySchema } from "@/lib/validations";
-import { getAuth } from "@hono/clerk-auth";
+import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { db } from "@/db";
 import { studySections } from "@/db/schema";
 
 const app = new Hono().post(
   "/",
   zValidator("json", createSectionStudySchema),
+  clerkMiddleware(),
   async (c) => {
     const validated = c.req.valid("json");
     const auth = getAuth(c);
@@ -16,15 +17,16 @@ const app = new Hono().post(
       return c.json({ data: null, message: "Usuário não encontrado" });
     }
 
-    await db.insert(studySections).values({
+    const data = await db.insert(studySections).values({
       userId: auth.userId,
-      ...validated,
       createdAt: new Date(),
       updatedAt: new Date(),
+      ...validated,
+      totalHours: Number(validated.totalHours),
     });
 
     return c.json({
-      data: null,
+      data: data,
       message: "Seção criada com sucesso!",
     });
   }
