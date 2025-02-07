@@ -27,7 +27,10 @@ export default function RootLayout({
       localization={ptBR}
     >
       <html>
-        <body className={`antialiased ${baloo.className}`}>
+        <body
+          className={`antialiased ${baloo.className}`}
+          suppressHydrationWarning
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

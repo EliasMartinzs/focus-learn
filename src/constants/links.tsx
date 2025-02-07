@@ -15,16 +15,16 @@ export const MENU_LINKS: MenuLinks[] = [
   {
     label: "Meus estudos",
     icon: <BookA strokeWidth={1.5} />,
-    href: "/estudies",
+    href: "/dashboard/secoes",
   },
   {
     label: "Meus flashcards",
     icon: <FileText strokeWidth={1.5} />,
-    href: "/flashcards",
+    href: "/dashboard/flashcards",
   },
   {
     label: "Minhas metas",
     icon: <Trophy strokeWidth={1.5} />,
-    href: "/flashcards",
+    href: "/dashboard/metas",
   },
 ] as const;

@@ -5,8 +5,10 @@ import { MENU_LINKS } from "@/constants/links";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { UserButton } from "../reusable/user-button";
+import { UserButton } from "../../features/user/components/user-button";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
+import { LogOutButton } from "../reusable/logou-button";
+import { ToggleMode } from "../reusable/toggle-mode";
 
 type Props = {};
 
@@ -25,7 +27,7 @@ export const BottomBarDesktop = (props: Props) => {
             pathname === href ? (
               <HoverBorderGradient
                 key={label}
-                className="inline-flex gap-x-3 items-center bg-background"
+                className="inline-flex gap-x-3 items-center bg-background text-foreground"
               >
                 {icon}
                 {label}
@@ -43,8 +45,10 @@ export const BottomBarDesktop = (props: Props) => {
           )}
         </div>
 
-        <div>
+        <div className="flex items-center gap-x-4">
           <UserButton />
+          <ToggleMode />
+          <LogOutButton showIcon />
         </div>
       </div>
     </footer>

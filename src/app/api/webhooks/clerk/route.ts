@@ -1,7 +1,11 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import prisma from "@/lib/db";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import next from "next";
+// import prisma from "@/lib/db";
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -51,42 +55,36 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    const existedUser = await prisma.user.findUnique({
-      where: {
-        id: evt.data.id,
-      },
-    });
+    const existedUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, id as string));
 
-    if (!existedUser) {
-      await prisma.user.create({
-        data: {
-          id: id,
-          name: evt.data.first_name || evt.data.username || "Anonymous",
-          email: evt.data.email_addresses?.[0]?.email_address,
-          image_url: evt.data.image_url,
-        },
+    if (existedUser.length === 0) {
+      await db.insert(users).values({
+        id: id!,
+        firstName: evt.data.first_name || evt.data.username!,
+        lastName: evt.data.last_name!,
+        email:
+          evt.data.email_addresses && evt.data.email_addresses.length > 0
+            ? evt.data.email_addresses[0].email_address
+            : "",
+        imageUrl: "/user.png",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        consecutiveStudyDays: 0,
       });
+
+      return new Response("Usuario criado com sucesso", { status: 200 });
     }
+
+    return new Response("Usuario ja existe", { status: 200 });
   }
 
   if (eventType === "user.deleted") {
-    await prisma.user.delete({
-      where: {
-        id: id,
-      },
-    });
-  }
+    await db.delete(users).where(eq(users.id, id!));
 
-  if (eventType === "user.updated") {
-    await prisma.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        name: evt.data.first_name || evt.data.username || "Anonymous",
-        image_url: evt.data.image_url,
-      },
-    });
+    return new Response("Usuario deletado", { status: 200 });
   }
 
   return new Response("Webhook received", { status: 200 });

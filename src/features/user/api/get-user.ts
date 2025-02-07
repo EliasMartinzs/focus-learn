@@ -1,23 +1,24 @@
 import client from "@/lib/client";
-import { User } from "@prisma/client";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import type { InferResponseType } from "hono/client";
 
-type Response = {
-  data: User;
-  error: string;
-};
+type UserResponse = InferResponseType<typeof client.api.user.$get>;
 
 export const getUser = () => {
-  const query = useQuery({
+  const query = useQuery<UserResponse, Error>({
     queryKey: ["user"],
-    queryFn: async (): Promise<Response> => {
+    queryFn: async () => {
       const response = await client.api.user.$get();
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error("Erro ao buscar dados do usuario!, tente novamente");
+      }
 
-      return data as Response;
+      return response.json();
     },
-    staleTime: 1000 * 60 * 60 * 24,
+
+    staleTime: 1000 * 60 * 180,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
 

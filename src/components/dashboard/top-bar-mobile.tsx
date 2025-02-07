@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { SheetReusable } from "../reusable/sheet-reusable";
-import { Menu, PanelRight } from "lucide-react";
-import { UserButton } from "../reusable/user-button";
+import { PanelRight } from "lucide-react";
+import { UserButton } from "../../features/user/components/user-button";
 import { MENU_LINKS } from "@/constants/links";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { LogOutButton } from "../reusable/logou-button";
 
 export const TopBarMobile = () => {
   const pathname = usePathname();
+
   return (
     <header className="w-full block lg:hidden relative">
       <nav className="w-full p-5 flex items-center justify-between">
@@ -37,8 +39,9 @@ export const TopBarMobile = () => {
                   </Link>
                 ))}
               </div>
-              <div className="absolute bottom-10">
+              <div className="absolute bottom-10 space-y-6">
                 <UserButton showEmail showName />
+                <LogOutButton showIcon />
               </div>
             </div>
           }
