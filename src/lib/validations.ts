@@ -14,12 +14,9 @@ export const createSectionStudySchema = z.object({
       message: "Insira uma disciplina",
     })
     .max(32),
-  totalHours: z
-    .string()
-    .min(1, {
-      message: "Insira a quantidade de horas a serem estudadas",
-    })
-    .max(32),
+  totalHours: z.number().min(1, {
+    message: "Insira a quantidade de horas a serem estudadas",
+  }),
 });
 
 export type CreateSectionStudySchemaValidation = z.infer<

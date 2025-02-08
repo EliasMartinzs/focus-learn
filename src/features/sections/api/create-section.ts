@@ -12,24 +12,24 @@ export const createSection = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationKey: ["create-section"],
     mutationFn: async (json) => {
-      const response = await client.api.sections.$post({
-        json,
-      });
+      const response = await client.api.sections.$post({ json });
 
-      if (response.ok) {
-        throw new Error("erro ao criar nova secao de estudo");
+      if (!response.ok) {
+        throw new Error(
+          "Houve um erro ao criar sua seção de estudos, Tente novamente!"
+        );
       }
 
       return response.json();
     },
-    onSuccess: () => {
-      toast("Seção de estudos criado com sucesso!");
+    onSuccess: (data) => {
+      toast(`Seção de estudos criado com sucesso!, ${data}`);
       queryClient.invalidateQueries({
         queryKey: ["create-sections", "sections"],
       });
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       toast("Erro ao criar seção de estudos!, Tente novamente");
     },
   });

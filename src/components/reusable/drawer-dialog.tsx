@@ -20,10 +20,17 @@ type Props = {
   children: React.ReactNode;
   trigger: React.ReactNode;
   title: string;
+  open: boolean;
+  setOpen: (prevState: boolean) => void;
 };
 
-export const DrawerDialog = ({ children, trigger, title }: Props) => {
-  const [open, setOpen] = React.useState(false);
+export const DrawerDialog = ({
+  children,
+  trigger,
+  title,
+  open,
+  setOpen,
+}: Props) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
