@@ -1,0 +1,1 @@
+ALTER TABLE "study_metrics" ALTER COLUMN "section_id" SET DATA TYPE serial;

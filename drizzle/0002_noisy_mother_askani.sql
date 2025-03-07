@@ -1,0 +1,1 @@
+ALTER TABLE "study_metrics" ADD CONSTRAINT "study_metrics_section_id_unique" UNIQUE("section_id");

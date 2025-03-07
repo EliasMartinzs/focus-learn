@@ -1,1 +1,0 @@
-ALTER TABLE "users" ADD COLUMN "clerk_ide" varchar NOT NULL;

@@ -1,9 +1,179 @@
 {
-  "id": "97335a3b-4a45-4ba8-b8ff-d63d2572690a",
-  "prevId": "6a0d4cb6-2d54-40f0-b874-53f89b4174ec",
+  "id": "c8f44194-bc39-4386-bc92-01fba9cdacae",
+  "prevId": "bf82d643-f97a-48dd-8081-caafb3e20e19",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.flashcards": {
+      "name": "flashcards",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "section_id": {
+          "name": "section_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "question": {
+          "name": "question",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "answer": {
+          "name": "answer",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tags": {
+          "name": "tags",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "flashcards_user_id_users_id_fk": {
+          "name": "flashcards_user_id_users_id_fk",
+          "tableFrom": "flashcards",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "flashcards_section_id_study_sections_id_fk": {
+          "name": "flashcards_section_id_study_sections_id_fk",
+          "tableFrom": "flashcards",
+          "tableTo": "study_sections",
+          "columnsFrom": [
+            "section_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.notes": {
+      "name": "notes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sub_topic_id": {
+          "name": "sub_topic_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "notes_user_id_users_id_fk": {
+          "name": "notes_user_id_users_id_fk",
+          "tableFrom": "notes",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "notes_sub_topic_id_sub_topics_id_fk": {
+          "name": "notes_sub_topic_id_sub_topics_id_fk",
+          "tableFrom": "notes",
+          "tableTo": "sub_topics",
+          "columnsFrom": [
+            "sub_topic_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.study_metrics": {
       "name": "study_metrics",
       "schema": "",
@@ -22,9 +192,22 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "total_hours_goal": {
+          "name": "total_hours_goal",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_hours_studied": {
+          "name": "total_hours_studied",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
         },
         "progress_percentage": {
           "name": "progress_percentage",
@@ -40,6 +223,19 @@
         },
         "estimated_completion_date": {
           "name": "estimated_completion_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reminder_enabled": {
+          "name": "reminder_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "reminder_time": {
+          "name": "reminder_time",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
@@ -77,7 +273,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -111,7 +307,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -121,11 +317,13 @@
           "primaryKey": false,
           "notNull": true
         },
-        "total_hours": {
-          "name": "total_hours",
-          "type": "numeric",
+        "status": {
+          "name": "status",
+          "type": "status_enum",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'ativo'"
         },
         "created_at": {
           "name": "created_at",
@@ -152,7 +350,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -196,6 +394,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "notes_id": {
+          "name": "notes_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -223,6 +427,19 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        },
+        "sub_topics_notes_id_study_sections_id_fk": {
+          "name": "sub_topics_notes_id_study_sections_id_fk",
+          "tableFrom": "sub_topics",
+          "tableTo": "study_sections",
+          "columnsFrom": [
+            "notes_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -243,7 +460,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -265,6 +482,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "duration": {
+          "name": "duration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "timestamp": {
           "name": "timestamp",
           "type": "timestamp",
@@ -284,7 +507,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "user_activity_log_section_id_study_sections_id_fk": {
@@ -326,18 +549,18 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "varchar",
           "primaryKey": true,
           "notNull": true
         },
-        "clerk_ide": {
-          "name": "clerk_ide",
-          "type": "varchar",
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
         },
-        "name": {
-          "name": "name",
+        "last_name": {
+          "name": "last_name",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
@@ -391,7 +614,18 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.status_enum": {
+      "name": "status_enum",
+      "schema": "public",
+      "values": [
+        "ativo",
+        "ausente",
+        "pausado",
+        "concluído"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

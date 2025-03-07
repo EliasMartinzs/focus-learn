@@ -1,6 +1,6 @@
 {
-  "id": "a594e963-c840-429d-bc59-9d4a692e9c23",
-  "prevId": "4303fb0e-d8c1-4282-a8eb-679114246159",
+  "id": "069c0a71-2b40-475e-8a03-be20e8b24966",
+  "prevId": "224f84d6-94c1-4ac0-a4f1-0d21c13ec0bf",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -186,7 +186,7 @@
         },
         "section_id": {
           "name": "section_id",
-          "type": "integer",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },

@@ -55,7 +55,7 @@ body {
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 346.8 77.2% 49.8%;
-    --chart-1: 220 70% 50%;
+    --chart-1: 340 75% 55%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
@@ -74,4 +74,25 @@ body {
   .custom-shadow {
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
   }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Remove as setas no Chrome, Safari, Edge e Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove as setas no Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

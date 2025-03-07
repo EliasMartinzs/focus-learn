@@ -1,7 +1,7 @@
 import ConsecutiveStudyDays from "@/components/dashboard/consecutive-days";
 import { ImagesDisplay } from "@/components/dashboard/images-display";
 import { QuotesDisplay } from "@/components/dashboard/quotes-display";
-import { TotalHours } from "@/components/dashboard/total-hours";
+import { TotalHours } from "@/features/sections/components/total-hours";
 
 export default function Dashboard() {
   return (

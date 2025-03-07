@@ -8,6 +8,7 @@ import { MENU_LINKS } from "@/constants/links";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { LogOutButton } from "../reusable/logou-button";
+import { ToggleMode } from "../reusable/toggle-mode";
 
 export const TopBarMobile = () => {
   const pathname = usePathname();
@@ -39,9 +40,12 @@ export const TopBarMobile = () => {
                   </Link>
                 ))}
               </div>
-              <div className="absolute bottom-10 space-y-6">
+              <div className="w-full absolute bottom-10 space-y-6">
                 <UserButton showEmail showName />
-                <LogOutButton showIcon />
+                <div className="w-full flex items-center gap-x-20">
+                  <LogOutButton showIcon />
+                  <ToggleMode />
+                </div>
               </div>
             </div>
           }

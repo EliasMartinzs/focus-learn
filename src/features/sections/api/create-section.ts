@@ -23,14 +23,14 @@ export const createSection = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      toast(`Seção de estudos criado com sucesso!, ${data}`);
+      toast.success(`Seção de estudos criado com sucesso!`);
       queryClient.invalidateQueries({
-        queryKey: ["create-sections", "sections"],
+        queryKey: ["sections"],
       });
     },
     onError: (error) => {
       console.error(error);
-      toast("Erro ao criar seção de estudos!, Tente novamente");
+      toast.error("Erro ao criar seção de estudos!, Tente novamente");
     },
   });
 

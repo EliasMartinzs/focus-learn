@@ -5,6 +5,8 @@ import { Skeleton } from "../../../components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { User } from "lucide-react";
 
 type Props = {
   showName?: boolean;
@@ -13,6 +15,7 @@ type Props = {
 
 export function UserButton({ showName = false, showEmail = false }: Props) {
   const { data, isLoading } = getUser();
+  const { theme } = useTheme();
 
   if (isLoading) {
     return (
@@ -24,13 +27,16 @@ export function UserButton({ showName = false, showEmail = false }: Props) {
 
   return (
     <div className={cn("flex items-center gap-x-3 w-full")}>
-      <div className="relative size-8">
-        <Image
-          src={data?.data?.imageUrl || "/user.png"}
-          fill
-          alt={data?.data?.firstName ? data?.data?.firstName : ""}
-          className="object-cover rounded-full"
-        />
+      <div className="flex items-center">
+        {data?.data?.imageUrl === "/user.png" ? (
+          theme === "dark" ? (
+            <User color="#FFF" />
+          ) : (
+            <User color="#000" />
+          )
+        ) : (
+          <Image src={data?.data?.imageUrl!} alt="" width={36} height={36} />
+        )}
       </div>
 
       <div className="flex flex-col">
